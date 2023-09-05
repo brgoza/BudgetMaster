@@ -1,0 +1,58 @@
+﻿@model HouseholdsViewModel
+@{
+    ViewData["Title"] = "Households";
+}
+<h1>@ViewData["Title"]</h1>
+<div class="row">
+    <div class="col-6">
+        <table id="households-table" class="display" style="width:100%">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                </tr>
+            </thead>
+        </table>
+    </div>
+    <div class="col-6">
+
+    </div>
+</div>
+
+<script>
+$(document).ready(function () {
+        new DataTable('#households-table', {
+            ajax: '/Data/Households/GetUserHouseholdsAsync',
+            columns: [
+                { data: 'name' },
+            ],
+            select: {
+                style: 'single'
+            },
+            dom: 'Bfrtip',
+            buttons: [{
+                    text: 'Create',
+                    action: function (e, dt, button, config)
+                    {
+                        window.location.href = '/Households/Create';
+                    }
+                },
+                {
+                    extend: 'selectedSingle',
+                    text: 'edit',
+                    action: function (e, dt, button, config)
+                    {
+                        window.location.href = '/Households/Edit/' + dt.row({ selected: true }).data().id;
+                    }
+                },}
+                {
+                    extend: 'selectedSingle',
+                    text: 'info',
+                    action: function (e, dt, button, config)
+                    {
+                        console.log(dt.row({ selected: true }).data());
+                    }
+                }
+            ]
+        });
+    });
+</script>
