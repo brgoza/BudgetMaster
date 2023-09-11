@@ -1,4 +1,24 @@
-﻿// Please see documentation at https://learn.microsoft.com/aspnet/core/client-side/bundling-and-minification
-// for details on configuring this project to bundle and minify static web assets.
+﻿function formatHouseholdUserRows(userData)
+{
+    var rowsString = "";
+    userData.toArray().forEach((value, index, array) =>
+    {
+        rowsString += "<tr><td>" + value.userName + "</td><td>" + value.email + "</td><td>" + value.phoneNumber + "</td></tr>";
+    });
+}
 
-// Write your JavaScript code.
+function updateNotificationsBadge()
+{
+    var link = document.getElementById('notifications-link');
+    var badge = new bootstrap.Badge();
+    var count = fetch('/Data/GetUserNotificationsCount');
+    badge.text = count;
+    if (count > 0)
+    {
+        link.firstChild = badge;
+    }
+    else
+    {
+        link.removeChild(link.firstChild);
+    }
+}

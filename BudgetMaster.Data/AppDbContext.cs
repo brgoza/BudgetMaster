@@ -1,5 +1,6 @@
 ﻿using BudgetMaster.Data.EntityTypes;
 using BudgetMaster.Data.EntityTypes.Identity;
+using BudgetMaster.Models;
 
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
@@ -10,7 +11,7 @@ public class AppDbContext : IdentityDbContext<AppUser, AppRole, Guid>
 {
     public DbSet<Household> Households { get; set; } = null!;
     public DbSet<HouseholdUser> HouseholdUsers { get; set; } = null!;
-
+    public DbSet<HouseholdInvitation> HouseholdInvitations { get; set; } = null!;
     public DbSet<Budget> Budgets { get; set; } = null!;
     public DbSet<BudgetEvent> BudgetEvents { get; set; } = null!;
     public DbSet<BudgetCategory> BudgetCategories { get; set; } = null!;
@@ -21,6 +22,7 @@ public class AppDbContext : IdentityDbContext<AppUser, AppRole, Guid>
     public DbSet<Account> Accounts { get; set; } = null!;
     public DbSet<Transaction> Transactions { get; set; } = null!;
     public DbSet<AccountUser> AccountUsers { get; set; } = null!;
+    
     public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
     {
     }

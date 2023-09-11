@@ -1,11 +1,17 @@
 ﻿using BudgetMaster.Data.EntityTypes;
 using BudgetMaster.Data.EntityTypes.Identity;
 using BudgetMaster.Models;
+using BudgetMaster.Services;
 
 namespace BudgetMaster.ModelHelpers;
 
 public  class ModelHelperService
 {
+    private readonly HouseholdService _householdService;
+    public ModelHelperService(HouseholdService householdService)
+    {
+        _householdService = householdService;
+    }
     public  DashboardViewModel CreateDashboardViewModel(AppUser user)
     {
         DashboardViewModel model = new()
@@ -19,7 +25,13 @@ public  class ModelHelperService
         }
         return model;
     }
-    
+    public HouseholdsViewModel CreateHouseholdsViewModel(AppUser user)
+    {
+        user.Households = _householdService.GetUserHouseholdsAsync(user.Id).Result;
+        return CreateHouseholdsViewModel(user.Households.ToList());
+    }
+
+
     public HouseholdsViewModel CreateHouseholdsViewModel(List<Household> households)
     {
         HouseholdsViewModel model = new()

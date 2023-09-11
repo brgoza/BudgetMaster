@@ -4,7 +4,7 @@ namespace BudgetMaster.Models;
 
 public class  HouseholdsViewModel
 {
-    public List<HouseholdViewModel> Households
+    public List<HouseholdViewModel>? Households { get; set; }
 }
 public class HouseholdViewModel
 {
@@ -19,7 +19,7 @@ public class HouseholdUserViewModel
 {
     public Guid UserId { get; set; }
     public string UserName { get; set; } = null!;
-    public HouseholdUserRole Role { get; set; }
+    public HouseholdRole Role { get; set; }
     public string RoleName => Role.ToString();
 }
 

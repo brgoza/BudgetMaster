@@ -32,4 +32,6 @@ public class UserService
                 => await _userManager.FindByIdAsync(userId.ToString());
     public async Task<AppUser?> GetAppUserByNameAsync(string username)
         => await _userManager.FindByNameAsync(username);
+    public async Task<AppUser?> GetAppUserByEmailAsync(string email)
+        => await _userManager.FindByEmailAsync(email);
 }

@@ -5,6 +5,7 @@ using BudgetMaster.Services;
 
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Azure;
 
 namespace BudgetMaster
 {
@@ -38,6 +39,7 @@ namespace BudgetMaster
 
             builder.Services.AddControllersWithViews();
 
+            
             builder.Services.AddScoped<UserService>();
             builder.Services.AddScoped<RecurringEventService>();
             builder.Services.AddScoped<ModelHelperService>();

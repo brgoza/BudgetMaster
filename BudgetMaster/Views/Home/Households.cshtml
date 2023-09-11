@@ -14,13 +14,13 @@
         </table>
     </div>
     <div class="col-6">
-
     </div>
 </div>
 
 <script>
-$(document).ready(function () {
-        new DataTable('#households-table', {
+    $(document).ready(function ()
+    {
+        let householdTable = new DataTable('#households-table', {
             ajax: '/Data/Households/GetUserHouseholdsAsync',
             columns: [
                 { data: 'name' },
@@ -30,29 +30,87 @@ $(document).ready(function () {
             },
             dom: 'Bfrtip',
             buttons: [{
-                    text: 'Create',
-                    action: function (e, dt, button, config)
-                    {
-                        window.location.href = '/Households/Create';
-                    }
-                },
+                text: 'New',
+                action: function (e, dt, button, config)
                 {
-                    extend: 'selectedSingle',
-                    text: 'edit',
-                    action: function (e, dt, button, config)
-                    {
-                        window.location.href = '/Households/Edit/' + dt.row({ selected: true }).data().id;
-                    }
-                },}
+                    window.location.href = '/Households/Create';
+                }
+            },
+            {
+                extend: 'selectedSingle',
+                text: 'edit',
+                action: function (e, dt, button, config)
                 {
-                    extend: 'selectedSingle',
-                    text: 'info',
+                    window.location.href = '/Households/Edit/' + dt.row({ selected: true }).data().id;
+                }
+            },
+                {
+                    text: 'invite',
                     action: function (e, dt, button, config)
                     {
-                        console.log(dt.row({ selected: true }).data());
+                        sendInvite(dt.row({selected:true}).data.id);
                     }
                 }
+            {
+                extend: 'selectedSingle',
+                text: 'info',
+                action: function (e, dt, button, config)
+                {
+                    console.log(dt.row({ selected: true }).data());
+                }
+            }
             ]
         });
+        // Add event listener for opening and closing details
+        householdTable.on('click', 'td.tr', function (e)
+        {
+            let tr = e.target.closest('tr');
+            let row = table.row(tr);
+
+            if (row.child.isShown())
+            {
+                row.child.hide();
+            }
+            else
+            {
+                row.child(formatHouseholdUserRows(row.data().householdUsers)).show();
+            }
+        });
     });
+    
+    
+    function sendInvite(householdId) {
+         Swal.fire({
+            title: 'Send Invite',
+            input: 'text',
+            inputAttributes: {
+            autocapitalize: 'off'
+            },
+            showCancelButton: true,
+            confirmButtonText: 'Send',
+            showLoaderOnConfirm: true,
+            preConfirm: (login) => {
+                return fetch(`/Households/Invite?householdId=` + householdId + '&email=' + input, {method: 'post'})
+                .then(response => {
+                    if (!response.ok) {
+                    throw new Error(response.statusText)
+            }
+        return response.json()
+        })
+            .catch(error => {
+            Swal.showValidationMessage(
+            `Request failed: ${error}`
+        )
+      })
+  },
+        allowOutsideClick: () => !Swal.isLoading()
+        }).then((result) => {
+            if (result.isConfirmed) {
+                Swal.fire({
+                title: `invite sent to `,
+                imageUrl: result.value.avatar_url
+            })
+  }
+}) 
+}
 </script>

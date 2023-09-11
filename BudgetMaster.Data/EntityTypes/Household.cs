@@ -25,12 +25,12 @@ public class HouseholdUser
     public Household Household { get; set; } = null!;
     public Guid AppUserId { get; set; }
     public AppUser AppUser { get; set; } = null!;
-    public HouseholdUserRole Role { get; set; } 
+    public HouseholdRole Role { get; set; } 
 }
 
 
 
-public enum HouseholdUserRole
+public enum HouseholdRole
 {
     Owner,
     Admin,

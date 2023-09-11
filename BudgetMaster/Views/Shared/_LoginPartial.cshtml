@@ -7,6 +7,9 @@
 @if (SignInManager.IsSignedIn(User))
 {
     <li class="nav-item">
+        <a id="notifications-link" class="nav-link text-dark" asp-controller="Home" asp-action="Notifications" title="Notifications">Notifications</a>
+    </li>
+    <li class="nav-item">
         <a  class="nav-link text-dark" asp-controller="Accounts" asp-action="Manage" title="Manage">Hello @User.Identity?.Name!</a>
     </li>
     <li class="nav-item">
@@ -25,3 +28,9 @@ else
     </li>
 }
 </ul>
+
+<script>
+    document.onload(){
+    updateNotificationsBadge();
+    }
+</script>
